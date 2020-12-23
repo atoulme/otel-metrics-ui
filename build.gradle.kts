@@ -21,6 +21,11 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	opentelemetryVersion = "0.13.1"
+	grpcVersion = '1.34.1'
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jersey")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -29,6 +34,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	compile platform("io.opentelemetry:opentelemetry-bom:${opentelemetryVersion}")
+	compile platform("io.grpc:grpc-bom:${grpcVersion}")
 }
 
 tasks.withType<KotlinCompile> {
