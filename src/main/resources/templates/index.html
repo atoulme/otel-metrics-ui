@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>OpenTelemetry visualizer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <h2>Latest metrics</h2>
+  <div id="latest_metrics">
+      <table>
+      <tr th:each="metric: ${@metricsListView.getMetrics()}">
+        <td th:text="${metric}" />
+      </tr>
+      </table>
+  </div>
+</body>
+</html>

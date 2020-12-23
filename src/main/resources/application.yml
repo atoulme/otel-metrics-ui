@@ -1,0 +1,8 @@
+grpc:
+  port: 4317
+  host: "0.0.0.0"
+spring:
+  main:
+    banner-mode: "off"
+  jersey:
+    type: filter
