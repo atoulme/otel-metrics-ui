@@ -48,23 +48,18 @@ class RestController(val logsSink : LogsSink, val metricsSink : MetricsSink, val
     }
 
     private fun metricValue(m: io.opentelemetry.proto.metrics.v1.Metric): String {
-        if (m.hasDoubleGauge()) {
-            return m.doubleGauge.dataPointsList.map { it.value }.joinToString(separator =  " ")
+        if (m.hasGauge()) {
+            return m.gauge.dataPointsList.map { it.asDouble }.joinToString(separator =  " ")
         }
-        if (m.hasIntGauge()) {
-            return m.intGauge.dataPointsList.map { it.value }.joinToString(separator =  " ")
+        if (m.hasHistogram()) {
+            return m.histogram.dataPointsList.map { "sum: ${it.sum}, count: ${it.count}, values: ${it.exemplarsList.map { it.asDouble }.joinToString(separator =  ",")}" }.joinToString(separator =  " ")
         }
-        if (m.hasDoubleHistogram()) {
-            return m.doubleHistogram.dataPointsList.map { "sum: ${it.sum}, count: ${it.count}, values: ${it.exemplarsList.map { it.value }.joinToString(separator =  ",")}" }.joinToString(separator =  " ")
+        if (m.hasSum()) {
+            return m.sum.dataPointsList.map { it.asDouble }.joinToString(separator =  " ")
         }
-        if (m.hasIntHistogram()) {
-            return m.intHistogram.dataPointsList.map { "sum: ${it.sum}, count: ${it.count}, values: ${it.exemplarsList.map { it.value }.joinToString(separator =  ",")}" }.joinToString(separator =  " ")
-        }
-        if (m.hasDoubleSum()) {
-            return m.doubleSum.dataPointsList.map { it.value }.joinToString(separator =  " ")
-        }
-        if (m.hasIntSum()) {
-            return m.intSum.dataPointsList.map { it.value }.joinToString(separator =  " ")
+
+        if (m.hasSummary()) {
+            return m.summary.dataPointsList.map { it.quantileValuesList }.joinToString(separator =  " ")
         }
         throw UnsupportedOperationException("Unsupported type for ${m.name}")
 

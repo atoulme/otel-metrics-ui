@@ -22,7 +22,7 @@ repositories {
 }
 
 
-val opentelemetryVersion = "0.13.1"
+val opentelemetryVersion = "1.4.1"
 val grpcVersion = "1.34.1"
 
 
@@ -44,9 +44,11 @@ dependencies {
 	implementation("io.grpc:grpc-stub")
 	implementation("io.netty:netty-all")
 	implementation("io.opentelemetry:opentelemetry-api")
-	implementation("io.opentelemetry:opentelemetry-proto")
+	implementation("io.opentelemetry:opentelemetry-proto:${opentelemetryVersion}-alpha")
 	implementation("io.opentelemetry:opentelemetry-sdk")
 	implementation("io.opentelemetry:opentelemetry-sdk-trace")
+	implementation("io.opentelemetry:opentelemetry-exporter-otlp-metrics:${opentelemetryVersion}-alpha")
+	implementation("io.opentelemetry:opentelemetry-sdk-metrics:${opentelemetryVersion}-alpha")
 }
 
 tasks.withType<KotlinCompile> {
